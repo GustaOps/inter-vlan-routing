@@ -46,8 +46,8 @@ now in the router we're going to configure sub-interfaces
 but first, enable the connection between router and switch to happen            
 text: enable >> configure terminal >> interface g 0/0 >> no shutdown >> exit
 then
-text: interface g 0/0.1 >> encapsulation dot1Q 10 >> IP address 192.168.0.1 255.255.255.0 >> exit              
-repeat: interface g 0/0.2 >> encapsulation dot1Q 20 >> IP address 192.168.1.1 255.255.255.0             
+text: interface g 0/0.10 >> encapsulation dot1Q 10 >> IP address 192.168.0.1 255.255.255.0 >> exit              
+repeat: interface g 0/0.20 >> encapsulation dot1Q 20 >> IP address 192.168.1.1 255.255.255.0             
 
 # TEST IT
 enter PC0 prompt command >> ping 192.168.1.3
