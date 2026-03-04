@@ -47,7 +47,7 @@ but first, enable the connection between router and switch to happen
 text: enable >> configure terminal >> interface g 0/0 >> no shutdown >> exit
 then
 text: interface g 0/0.1 >> encapsulation dot1Q 10 >> IP address 192.168.0.1 255.255.255.0 >> exit              
-repeat: interface g 0/0.2 >> encapsulation dot1Q 20 >> network IP address 192.168.1.1 255.255.255.0             
+repeat: interface g 0/0.2 >> encapsulation dot1Q 20 >> IP address 192.168.1.1 255.255.255.0             
 
 # TEST IT
 enter PC0 prompt command >> ping 192.168.1.3
