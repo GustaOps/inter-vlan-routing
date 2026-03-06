@@ -26,9 +26,20 @@ in router-on-a-stick method we're commonly using a single physical link between 
 after configuring encapsulation, we must assign an IP address to the subinterface. this IP acts as the default gateway for the devices within that VLAN. that's why we made it twice, once for each VLAN.
 
 
-# extra
+# STP
 
 STP protocol must appear once you settle the 3 switches or more connected through physical link, Spanning Tree Protocol acts blocking one of your routes preventing it from turning an infinite loop.
+
+# ACL 
+
+enable >> configure terminal >> ip >> access-list >> extended >> 100
+once inside the ACL configuration
+>> permit >> tcp >> 192.168.1.0 0.0.0.255 host 192.168.2.2
+
+explanation:
+100 stands for the acl identifier, you must place a number between 100 and 199 if it is extended or you can just name it
+tcp and icmp are 2 different types of protocol.
+first IP is the host or the source                                                                                                          wildcard 0.0.0.255 means first three octets must correspond while the last varies.                                                          host = 0.0.0.0(it is actually a shortcut) thats why theres no wildcard after the server's IP.
 
 I'll show you some images to help you visualize it clearly.
 
