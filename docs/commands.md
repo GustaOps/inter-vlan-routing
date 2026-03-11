@@ -35,8 +35,7 @@ STP protocol must appear once you settle the 3 switches or more connected throug
 # ACL 
 
 enable >> configure terminal >> ip >> access-list >> extended >> 100
-once inside the ACL configuration
->> permit >> tcp >> 192.168.1.0 0.0.0.255 host 192.168.2.2
+once inside the ACL configuration >> permit >> tcp >> 192.168.1.0 0.0.0.255 host 192.168.2.2
 
 explanation:
 100 stands for the acl identifier, you must place a number between 100 and 199 if it is extended or you can just name it
@@ -45,4 +44,4 @@ first IP is the host or the source                                              
 
 I'll show you some images to help you visualize it clearly.
 
-[check-it-here](images.md#ACL)
+[check-it-here](images.md#ACL-Ping-test)
