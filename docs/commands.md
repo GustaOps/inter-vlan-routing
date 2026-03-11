@@ -30,6 +30,8 @@ after configuring encapsulation, we must assign an IP address to the subinterfac
 
 STP protocol must appear once you settle the 3 switches or more connected through physical link, Spanning Tree Protocol acts blocking one of your routes preventing it from turning an infinite loop.
 
+[STP](images.md#STP)
+
 # ACL 
 
 enable >> configure terminal >> ip >> access-list >> extended >> 100
@@ -43,4 +45,4 @@ first IP is the host or the source                                              
 
 I'll show you some images to help you visualize it clearly.
 
-[check-it-here](images.md)
+[check-it-here](images.md#ACL)
