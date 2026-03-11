@@ -1,6 +1,6 @@
 # Inter-vlan-routing
 
-[View Topology](docs/images.md#Topology)
+![View Topology](docs/images/topology.png)
 
 # Objective 
 to configure a connection between 2 different VLANs among the computer network. Project using router-on-a-stick method.
@@ -33,7 +33,7 @@ straight-through cable connection between different devices (e.g. PC-SWITCH and 
 crossover cable connection between SWITCHES
 assign manually an IP address and the default gateway corresponding to each PC.
 
-[view step 1 config](docs/images.md#Basic-config)
+![view step 1 config](docs/images/basic-conf.png)
 
 # STEP 2 
 configure VLAN 10 and 20 for each SWITCH 0 and SWITCH 1  
@@ -49,11 +49,11 @@ exit and then make sure trunk mode is connected between SWITCH 2-ROUTER
 stil in the configure terminal, >> interface fa 0/3 >> switchport mode trunk                
 Now already able to ping in equal VLANs.
 
-[view vlan interfaces](docs/images.md#VLAN/Interfaces)
+![view vlan interfaces](docs/images/interfaces-vlan.png)
 
 After connecting the three switches, you may notice a small blocked point between them. This is STP in action. It blocks traffic on that link to prevent Layer 2 loops. If the main path goes down, the blocked link becomes active.
 
-[view STP](docs/images.md#STP)
+![view STP](docs/images/spanning-tree.png)
               
 # STEP 3
 now in the router we're going to configure sub-interfaces          
@@ -67,7 +67,7 @@ repeat: interface g 0/0.20 >> encapsulation dot1Q 20 >> IP address 192.168.1.1 2
 enter PC0 prompt command >> ping 192.168.1.3
 if successful, vlan should be working properly.
 
-[view ping test](docs/images.md#Ping-test)
+![view ping test](docs/images/ping.png)
 
 # V1.1.0 
 # Server segmentation and Network security(ACL)
@@ -107,7 +107,7 @@ Using an OUT ACL also simplifies the configuration. An alternative approach woul
 
 By applying the ACL outbound toward the server VLAN, it is possible to block all traffic except the one explicitly permitted (VLAN 10) with a single configuration point, making the design simpler and easier to maintain.
 
-[view ACL ping test](docs/images.md#ACL-Ping-test)
+![view ACL ping test](docs/images/ACL.png)
 
 Important ACL Concepts
 
