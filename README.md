@@ -1,13 +1,15 @@
 # Inter-vlan-routing
 
+[View Topology](docs/images.md#Topology)
+
 # Objective 
-to configure a connection between 2 different VLANs among the computer network. Project using router-on-a-stick method
+to configure a connection between 2 different VLANs among the computer network. Project using router-on-a-stick method.
 
 # Tools in use
 1 router (model 1941)
 3 switches (model 2950T-24)
 4 PCs 
-straight-through and crossover internet cables 
+straight-through and crossover internet cables.
 
 # IP Addressing Table
 | Device  | VLAN | IP Address     | Subnet Mask     | Port/Interface        | Default Gateway |
@@ -16,20 +18,23 @@ straight-through and crossover internet cables
 | PC1      | 20   | 192.168.1.2   | 255.255.255.0  | Fa0/2 - Switch0       | 192.168.1.1     |
 | PC2      | 10   | 192.168.0.3   | 255.255.255.0  | Fa0/1 - Switch1       | 192.168.0.1     |
 | PC3      | 20   | 192.168.1.3   | 255.255.255.0  | Fa0/2 - Switch1       | 192.168.1.1     |
-| Router   | 10   | 192.168.0.1   | 255.255.255.0  | G0/0.10 - Switch2     | —               |
+| Router   | 10   | 192.168.0.1   | 255.255.255.0  | G0/0.10 - Switch2     | -               |
 | Router   | 20   | 192.168.1.1   | 255.255.255.0  | G0/0.20 - Switch2     | —               |
 | Router   | 30   | 192.168.2.1   | 255.255.255.0  | G0/0.30 - Switch2     | -               |
 | Server   | 30   | 192.168.2.2   | 255.255.255.0  | Fa0/4 - Switch2       | 192.168.2.1     |
 
 # STEP BY STEP/PROCEDURE
 First of all, we're going to assure a connection in equal VLANs
-to make it more managable (each VLAN will use a different subnet to enable proper Layer 3 routing)
+to make it more managable (each VLAN will use a different subnet to enable proper Layer 3 routing).
 # FOLLOW THE IP ADDRESSING TABLE!!
 # STEP 1
 place the devices
-straight-through cable connection between different devices (e.g. PC-SWiTCH and SWITCH-ROUTER).
+straight-through cable connection between different devices (e.g. PC-SWITCH and SWITCH-ROUTER).
 crossover cable connection between SWITCHES
-assign manually an IP address and the default gateway corresponding to each PC
+assign manually an IP address and the default gateway corresponding to each PC.
+
+[view step 1 config](docs/images.md#Basic-config)
+
 # STEP 2 
 configure VLAN 10 and 20 for each SWITCH 0 and SWITCH 1  
 text: enable >> configure terminal >> VLAN 10 >> (optional) name ... >> exit          
@@ -42,7 +47,14 @@ repeat: VLAN 20
 (although there's no need to assign interfaces to these VLANs, you still need to create it)              
 exit and then make sure trunk mode is connected between SWITCH 2-ROUTER            
 stil in the configure terminal, >> interface fa 0/3 >> switchport mode trunk                
-Now already able to ping in equal VLANs.              
+Now already able to ping in equal VLANs.
+
+[view vlan interfaces](docs/images.md#VLAN/Interfaces)
+
+After connecting the three switches, you may notice a small blocked point between them. This is STP in action. It blocks traffic on that link to prevent Layer 2 loops. If the main path goes down, the blocked link becomes active.
+
+[view STP](docs/images.md#STP)
+              
 # STEP 3
 now in the router we're going to configure sub-interfaces          
 but first, enable the connection between router and switch to happen            
@@ -54,6 +66,8 @@ repeat: interface g 0/0.20 >> encapsulation dot1Q 20 >> IP address 192.168.1.1 2
 # TEST IT
 enter PC0 prompt command >> ping 192.168.1.3
 if successful, vlan should be working properly.
+
+[view ping test](docs/images.md#Ping-test)
 
 # V1.1.0 
 # Server segmentation and Network security(ACL)
@@ -68,10 +82,9 @@ After confirming connectivity, an Access Control List (ACL) was implemented to r
 
 creating ACL and assigning it. router
 enable >> configure terminal >> ip >> access-list >> extended >> 100
-once inside the ACL configuration
->> permit >> tcp >> 192.168.1.0 0.0.0.255 host 192.168.2.2
+once inside the ACL configuration >> permit >> tcp >> 192.168.1.0 0.0.0.255 host 192.168.2.2
 again
-permit >> icmp >> 192.168.1.0 0.0.0.255 host 192.168.2.2
+permit >> (icmp) >> 192.168.1.0 0.0.0.255 host 192.168.2.2
 
 You may have noticed that no explicit deny rule was configured. This is because every ACL has an implicit ‘deny all’ rule at the end, which automatically blocks any traffic that is not explicitly permitted.
 
@@ -93,6 +106,8 @@ The ACL was applied outbound on the router interface connected to VLAN 30. In th
 Using an OUT ACL also simplifies the configuration. An alternative approach would be applying an IN ACL on the router subinterface connecte to VLAN 20, which would also prevent that VLAN from accessing the server. However, in a larger network with many VLANs, this approach would require attaching the same ACL to multiple subinterfaces.
 
 By applying the ACL outbound toward the server VLAN, it is possible to block all traffic except the one explicitly permitted (VLAN 10) with a single configuration point, making the design simpler and easier to maintain.
+
+[view ACL ping test](docs/images.md#ACL-Ping-test)
 
 Important ACL Concepts
 
